@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <termios.h>
+
+#include "VDMA.h"
+
+#define VDMAWidth 752
+#define VDMAHeight 480
+#define VDMAPixelWidth 8
+#define VDMAFB1Adr 0x1e000000
+#define VDMAFB2Adr 0x1f000000
+#define VDMABaseAddr 0x43000000
+
+
+int main()
+{
+	VDMA_info vdma;
+
+	VDMA_Init(&vdma, VDMABaseAddr, VDMAWidth, VDMAHeight, VDMAPixelWidth, VDMAFB1Adr, VDMAFB2Adr);
+
+	VDMA_Start(&vdma, VDMAFB1Adr);
+
+	printf("Waiting for end...\n");
+	while(VDMA_IsDone(&vdma)==0);
+
+	VDMA_UnInit(&vdma);
+}
+
+
+

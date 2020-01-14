@@ -1,0 +1,2 @@
+extern float svm_wts;
+extern float bias;
